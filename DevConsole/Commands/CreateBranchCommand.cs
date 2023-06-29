@@ -25,14 +25,14 @@ public sealed class CreateBranchCommand : DevConsoleCommand
         AddAlias("cb");
 
         AddArgument(new Argument<long?>("task-id"));
-        AddOption(new Option<bool>(new[] { "-cm", "--checkout-master" }, "Switch to master branch."));
+        AddOption(new Option<bool>(new[] { "-cm", "--checkout-main" }, "Switch to main branch."));
         AddOption(new Option<bool>(new[] { "-d", "--discard-all-changes" }, "Discard all changes."));
         AddOption(new Option<bool>(new[] { "-ex", "--experiment" }, "Experimental branch."));
         AddOption(new Option<bool>(new[] { "--ignore-work-item-state" }, "Ignores warning regarding work item state."));
     }
 
     private void DoCommand(long? taskId,
-                           bool checkOutMaster = false,
+                           bool checkOutMain = false,
                            bool discardAllChanges = false,
                            bool experiment = false,
                            bool ignoreWorkItemState = false)
@@ -91,9 +91,9 @@ public sealed class CreateBranchCommand : DevConsoleCommand
             Run("git reset --hard");
         }
 
-        if (checkOutMaster)
+        if (checkOutMain)
         {
-            Run("git checkout master");
+            Run("git checkout main");
             Run("git pull");
         }
 

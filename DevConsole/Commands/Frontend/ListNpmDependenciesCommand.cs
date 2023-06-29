@@ -16,7 +16,7 @@ public class ListNpmDependenciesCommand : ListDependenciesCommand
         Handler = CommandHandler.Create<bool?, ListDependenciesFormat>(DoCommand);
     }
 
-    private void DoCommand(bool? checkoutMasterAndDiscardChanges, ListDependenciesFormat format)
+    private void DoCommand(bool? checkoutMainAndDiscardChanges, ListDependenciesFormat format)
     {
         List(format, () => _packageReferenceService.GetNpmPackageReferences());
     }

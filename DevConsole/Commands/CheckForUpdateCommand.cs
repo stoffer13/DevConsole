@@ -6,11 +6,11 @@ namespace DevConsole.Commands;
 
 public class CheckForUpdateCommand : DevConsoleCommand
 {
-    private const string MainBranch = "master";
+    private const string MainBranch = "main";
     private readonly IPaths _paths;
 
     public CheckForUpdateCommand(IPaths paths)
-        : base("check-for-updates", "Update DevConsole if master branch is checked out and there is an update available.")
+        : base("check-for-updates", "Update DevConsole if main branch is checked out and there is an update available.")
     {
         _paths = paths;
         Handler = CommandHandler.Create(DoCommand);

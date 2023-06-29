@@ -54,6 +54,6 @@ public class VersionBumper
 
     private bool HasPreviousVersioningCommit()
     {
-        return ProcessHelper.GetOutput("git log --grep +semver master..HEAD --oneline").Output.Length > 0;
+        return ProcessHelper.GetOutput("git log --grep +semver main..HEAD --oneline").Output.Length > 0;
     }
 }
