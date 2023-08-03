@@ -68,7 +68,7 @@ public sealed class CreatePullRequestCommand : DevConsoleCommand
             return;
         }
 
-        Run($"az boards work-item update --id {workItemId} -f Microsoft.VSTS.Common.ResolvedReason=\"Fixed\" System.State=\"Code review\"", outputHandler: SuppressOutputHandler.Instance);
+        Run($"az boards work-item update --id {workItemId} -f System.State=\"In review\" --assigned-to \"\"", outputHandler: SuppressOutputHandler.Instance);
     }
 
     private void AutoCreatePullRequest(string? title, bool stopOpenBrowser, bool draft, bool setAutoComplete)
