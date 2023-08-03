@@ -25,7 +25,7 @@ public sealed class CreateBranchCommand : DevConsoleCommand
         AddAlias("cb");
 
         AddArgument(new Argument<long?>("task-id"));
-        AddOption(new Option<bool>(new[] { "-cm", "--checkout-main" }, "Switch to main branch."));
+        AddOption(new Option<bool>(new[] { "-pm", "--pull-main" }, "Pull changes from main branch."));
         AddOption(new Option<bool>(new[] { "-d", "--discard-all-changes" }, "Discard all changes."));
         AddOption(new Option<bool>(new[] { "-ex", "--experiment" }, "Experimental branch."));
         AddOption(new Option<bool>(new[] { "--ignore-work-item-state" }, "Ignores warning regarding work item state."));
@@ -93,7 +93,7 @@ public sealed class CreateBranchCommand : DevConsoleCommand
 
         if (checkOutMain)
         {
-            Run("git checkout main");
+            Run("git switch main");
             Run("git pull");
         }
 
@@ -105,7 +105,12 @@ public sealed class CreateBranchCommand : DevConsoleCommand
             Run($"git branch {branchName}");
         }
 
-        Run($"git checkout {branchName}");
+        Run($"git switch {branchName}");
+
+        if (checkOutMain)
+        {
+            Run("git merge main");
+        }
 
         if (!ignoreWorkItemState &&
             workItem.Fields.State != "In Progress"
