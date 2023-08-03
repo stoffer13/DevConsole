@@ -108,11 +108,11 @@ public sealed class CreateBranchCommand : DevConsoleCommand
         Run($"git checkout {branchName}");
 
         if (!ignoreWorkItemState &&
-            workItem.Fields.State != "Active"
-            && _promptService.Confirm($"Work item is in state {workItem.Fields.State}. Change the state to Active?",
+            workItem.Fields.State != "In Progress"
+            && _promptService.Confirm($"Work item is in state {workItem.Fields.State}. Change the state to 'In Progress'?",
                 true))
         {
-            var updateCommand = $"az boards work-item update --id {workItem.Fields.Id} --state Active";
+            var updateCommand = $"az boards work-item update --id {workItem.Fields.Id} --state 'In Progress'";
             if (workItem.Fields.AssignedTo is null)
             {
                 updateCommand += " --assigned-to me";

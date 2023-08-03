@@ -57,7 +57,7 @@ public abstract class DevConsoleCommand : Command
     protected JsonProcessResult<WorkItemResult[]> GetRecentWorkItems()
     {
         return GetJsonOutput<WorkItemResult[]>(
-            "az boards query --wiql 'SELECT Id, Title, State, [System.WorkItemType] FROM WorkItems WHERE [System.AssignedTo] = @me AND [System.State] IN (''Ready'', ''New'', ''Active'') ORDER BY [System.WorkItemType] ASC, [System.ChangedDate] DESC'",
+            "az boards query --wiql 'SELECT Id, Title, State, [System.WorkItemType] FROM WorkItems WHERE [System.AssignedTo] = @me AND [System.State] IN (''To Do'', ''In Progress'', ''In Review'') ORDER BY [System.WorkItemType] ASC, [System.ChangedDate] DESC'",
             true, expectExitCodeToBeZero: false);
     }
 
