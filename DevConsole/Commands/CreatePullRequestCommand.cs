@@ -68,7 +68,8 @@ public sealed class CreatePullRequestCommand : DevConsoleCommand
             return;
         }
 
-        Run($"az boards work-item update --id {workItemId} -f System.State=\"In review\" --assigned-to \"\"", outputHandler: SuppressOutputHandler.Instance);
+        Run($"az boards work-item update --id {workItemId} -f System.State=\"In Review\" --assigned-to \"\"", outputHandler: SuppressOutputHandler.Instance);
+        ColorConsole.WriteLine($"Work Item {workItemId} moved to 'In Review'", ConsoleColor.Green);
     }
 
     private void AutoCreatePullRequest(string? title, bool stopOpenBrowser, bool draft, bool setAutoComplete)
@@ -79,6 +80,14 @@ public sealed class CreatePullRequestCommand : DevConsoleCommand
         if (workItemId == null)
         {
             throw new UserActionException("Work item not found");
+        }
+
+        var remoteBranches = GetOutput("git branch -r");
+        if (!remoteBranches.Output.Contains("origin/" + branchName))
+        {
+            ColorConsole.WriteLine("Branch not found on remote, pushing to default origin...", ConsoleColor.Yellow);
+            Run($"git push --set-upstream origin {branchName}");
+            ColorConsole.WriteLine("Branch pushed", ConsoleColor.Green);
         }
 
         if (string.IsNullOrWhiteSpace(title))
@@ -92,7 +101,7 @@ public sealed class CreatePullRequestCommand : DevConsoleCommand
         }
 
         var pullRequest = GetJsonOutput<PullRequest>("az repos pr create " +
-                                                     $"--title \"{title}\" " +
+                                                     $"--title \"{workItemId} - {title}\" " +
                                                      $"--draft {draft} " +
                                                      $"--auto-complete {setAutoComplete} " +
                                                      "--delete-source-branch " +

@@ -32,7 +32,7 @@ public sealed class CreateBranchCommand : DevConsoleCommand
     }
 
     private void DoCommand(long? taskId,
-                           bool checkOutMain = false,
+                           bool pullMain = false,
                            bool discardAllChanges = false,
                            bool experiment = false,
                            bool ignoreWorkItemState = false)
@@ -91,7 +91,7 @@ public sealed class CreateBranchCommand : DevConsoleCommand
             Run("git reset --hard");
         }
 
-        if (checkOutMain)
+        if (pullMain)
         {
             Run("git switch main");
             Run("git pull");
@@ -107,7 +107,7 @@ public sealed class CreateBranchCommand : DevConsoleCommand
 
         Run($"git switch {branchName}");
 
-        if (checkOutMain)
+        if (pullMain)
         {
             Run("git merge main");
         }
