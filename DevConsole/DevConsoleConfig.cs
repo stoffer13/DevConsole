@@ -1,12 +1,13 @@
 using DevConsole.Infrastructure.Commands;
+using System.Net;
 
 namespace DevConsole;
 
 public class DevConsoleConfig
 {
-    public string AzureDevOpsOrganizationName => throw new UserActionException("Please set AzureDevOpsOrganizationName in DevConsole/DevConsoleConfig.cs");
+    public string AzureDevOpsOrganizationName => WebUtility.HtmlEncode("umbraco");
 
-    public string AzureDevOpsProjectName => throw new UserActionException("Please set AzureDevOpsProjectName in DevConsole/DevConsoleConfig.cs");
+    public string AzureDevOpsProjectName => WebUtility.HtmlEncode("Cloud Team");
 
     public string AzureDevOpsOrganizationUri => $"https://dev.azure.com/{AzureDevOpsOrganizationName}";
 
